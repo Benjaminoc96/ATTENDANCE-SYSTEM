@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visitor;
 use Illuminate\Http\Request;
 
 class VisitorController extends Controller
@@ -13,7 +14,8 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        //
+        return view('visitors.index')
+        ->with('visitors', Visitor::all());
     }
 
     /**
@@ -23,7 +25,7 @@ class VisitorController extends Controller
      */
     public function create()
     {
-        //
+        return view('visitors.form');
     }
 
     /**
@@ -34,7 +36,26 @@ class VisitorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>['required', 'max:125'],
+            'contact'=>['required', 'digits:10'],
+            'address'=>['required', 'max:125'],
+            'department'=>['required', 'max:125'],
+            'staff'=>['required'],
+            'purpose'=>['required', 'max:125']
+
+        ]);
+        Visitor::create($request->only([
+            'name',
+            'contact',
+            'address',
+            'department',
+            'staff',
+            'purpose',
+            'visitor_type'
+
+        ]));
+        return redirect()->back()->with('success', 'Successfully Logged In');
     }
 
     /**
