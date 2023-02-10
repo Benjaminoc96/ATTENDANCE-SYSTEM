@@ -9,6 +9,21 @@ class Visitor extends Model
 {
     use HasFactory;
     protected $table = 'visitors';
-    protected $fillable = ['name', 'contact', 'address', 'department', 'staff','purpose', 'visitor_type'];
+    protected $fillable = ['name', 'contact', 'address', 'department', 'staff','purpose', 'visitor_type', 'log_type'];
+
+
+
+
+    static function findById($id){
+        $visitor = self::where('id', $id)->first();
+        if(!$visitor){
+     
+        return abort(404, "visitor Not Found");
+            
+        }
+        return $visitor;
+    }
+
+
 
 }
