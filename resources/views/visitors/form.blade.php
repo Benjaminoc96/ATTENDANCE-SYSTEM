@@ -59,8 +59,8 @@
     <label for="visitor_type" class="form-label">Visitor Type</label>
     <select class="form-control @error('visitor_type') is-invalid @enderror" name="visitor_type" id="visitor_type" required="required"
     value="{{ old('visitor_type') ? old('visitor_type') : $visitor->visitor_type }}">
-      <option value="{{ $visitor->visitor_type }}">{{ $visitor->visitor_type }}</option>
-      <option value="Visitor">Visitor</option>
+      <option value="Student" {{ (old('visitor_type') == "Student")? "selected" : "" }}>Student</option>
+      <option value="Visitor" {{ (old('visitor_type') == "Visitor")? "selected" : "" }}>Visitor</option>
     </select>
     @error('visitor_type')
     <div class="invalid-feedback">
@@ -75,8 +75,8 @@
     <label for="department" class="form-label">Department</label>
     <select class="form-control @error('department') is-invalid @enderror" name="department" id="department" required="required">
       <option>Select Department</option>
-      <option value="Faculty">Faculty</option>
-      <option value="Research and Innovation">Research and Innovation</option>
+      <option value="Faculty" {{ (old('department') == "Faculty")? "selected" : "" }}>Faculty</option>
+      <option value="Research and Innovation" {{ (old('department') == "Research and Innovation")? "selected" : "" }}>Research and Innovation</option>
     </select>
     @error('department')
     <div class="invalid-feedback">
