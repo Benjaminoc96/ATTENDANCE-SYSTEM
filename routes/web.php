@@ -23,9 +23,10 @@ use App\Http\Controllers\VisitorController;
 
 //Route::resource('visitors', VisitorController::class);
 
-
 Route::prefix('visitors')->middleware('auth')->name('visitors.')->controller(VisitorController::class)->group(function () {
-    Route::get('/', 'index')->name('index');
+    Route::get('/index', 'index')->name('index');
+    Route::get('/visitorslog', 'visitorslog')->name('visitorslog');
+    Route::get('/viewTrashedVisitors', 'viewTrashedVisitors')->name('viewTrashedVisitors');
     Route::get('/homePage', 'homePage')->name('homePage');
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
@@ -33,8 +34,11 @@ Route::prefix('visitors')->middleware('auth')->name('visitors.')->controller(Vis
     Route::get('/{id}', 'show')->name('show');
     Route::patch('/update/{id}', 'update')->name('update');
     Route::delete('/{id}', 'destroy')->name('destroy');
+    Route::post('/restoreVisitors/{id}', 'restoreVisitors')->name('restoreVisitors');
     Route::patch('/updateOnlyLogIn/{id}', 'updateOnlyLogIn')->name('updateOnlyLogIn');
     Route::patch('/{id}', 'updateOnlyLogOut')->name('updateOnlyLogOut');
+    Route::post('/printVisitorLog', 'printVisitorLog')->name('printVisitorLog');
+    
 });
 
 

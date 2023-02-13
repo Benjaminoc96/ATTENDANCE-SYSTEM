@@ -36,9 +36,55 @@ class VisitorController extends Controller
 
     public function index()
     {
-        return view('visitors.index')
-        ->with('visitors', Visitor::all());
+        $title = 'Add Visitor';
+        $action = route('visitors.store');
+        $visitor = new Visitor;
+        return view('visitors.index', [
+            'visitor' => $visitor,
+            'title' => $title,
+            'action' => $action
+        ])->with('findVisitors', Visitor::all());
     }
+
+
+
+
+    // VIEW ALL TRASHED VISITORS
+
+    public function viewTrashedVisitors()
+    {
+        $visitor = Visitor::onlyTrashed();
+        return view('visitors.trashed', [
+            'visitor' => $visitor,
+        ])->with('findVisitors', Visitor::onlyTrashed());
+    }
+
+
+
+
+
+    public function restoreVisitors($id)
+    {
+        $visitor = Visitor::withTrashed()->where('id', $id)->first();
+        $visitor->restore();
+        $listTrashedVisitors = route('visitors.viewTrashedVisitors');
+        return redirect($listTrashedVisitors)->with('status', Visitor::all());
+    }
+
+
+
+
+    public function visitorslog()
+    {
+        return view('visitors.visitorslog');
+    }
+
+
+    public function printVisitorLog()
+    {
+        return view('visitors.printVisitorLog');
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -50,7 +96,7 @@ class VisitorController extends Controller
         $title = 'Add Visitor';
         $action = route('visitors.store');
         $visitor = new Visitor;
-        return view('visitors.form', [
+        return view('visitors.index', [
             'visitor' => $visitor,
             'title' => $title,
             'action' => $action
@@ -178,13 +224,8 @@ class VisitorController extends Controller
     function updateOnlyLogIn($id){
 
         DB::select("UPDATE visitors SET log_type = 'IN' where id = '{$id}'");
-        
-		//DB::insert("INSERT INTO `student_logs` set student_id = '{$id}', `log_type` = 'IN'");
-
         $studentRoute = route('visitors.index');
-        return redirect($studentRoute)->with('status', "Successfully Logged In");
-        
-        //->with('status', "$student_name has been Log In successfully at: $created_at");
+        return redirect($studentRoute)->with('status', "Successfully Logged Out");
 
     }
 
@@ -193,36 +234,10 @@ class VisitorController extends Controller
     function updateOnlyLogOut($id){
 
 		DB::update("UPDATE visitors SET log_type = 'OUT' where id = '{$id}'");
-       // DB::select("SELECT * from visitors where id = '{$id}'");
-        
-		//DB::insert("INSERT INTO `student_logs` set student_id = '{$id}', `log_type` = 'OUT'");
 
         $studentRoute = route('visitors.index');
-        return redirect($studentRoute)->with('status', "Successfully Logged Out");;
-        
-        //->with('status', "$student_name has been logout successfully at: $created_at");
+        return redirect($studentRoute)->with('status', "Successfully Logged In");;
 
     }
 
-
-
-            // $request->validate([
-        //     'name'=>['required', 'max:125'],
-        //     'contact'=>['required', 'digits:10'],
-        //     'address'=>['required', 'max:125'],
-        //     'department'=>['required', 'max:125'],
-        //     'staff'=>['required'],
-        //     'purpose'=>['required', 'max:125']
-
-        // ]);
-        // Visitor::create($request->only([
-        //     'name',
-        //     'contact',
-        //     'address',
-        //     'department',
-        //     'staff',
-        //     'purpose',
-        //     'visitor_type'
-
-        // ]));
 }

@@ -12,9 +12,9 @@ class Visitor extends Model
     use SoftDeletes;
     use HasFactory;
     protected $table = 'visitors';
-    protected $fillable = ['name', 'contact', 'address', 'department', 'staff','purpose', 'visitor_type', 'log_type'];
+   // protected $fillable = ['id', 'name', 'contact', 'address', 'department', 'staff','purpose', 'visitor_type', 'log_type'];
 
-
+    protected $guarded = [];
 
 
     static function findById($id){

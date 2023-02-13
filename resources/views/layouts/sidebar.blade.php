@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-        <a class="nav-link text-white active bg-gradient-primary" href="/">
+        <a class="nav-link text-white active bg-gradient-primary" href="/dashboard">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -20,18 +20,30 @@
         <li class="nav-item">
           <a class="nav-link text-white " href="{{ route('visitors.index') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">table_view</i>
+              <i class="material-icons opacity-10">person</i>
             </div>
             <span class="nav-link-text ms-1">Visitors</span>
           </a>
         </li>
         @if(Auth::user()->isAdmin() or Auth::user()->isHR() or Auth::user()->isDirector())
         <li class="nav-item">
-          <a class="nav-link text-white " href="/visitors">
+          <a class="nav-link text-white " href="{{ route('visitors.visitorslog') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-              <i class="material-icons opacity-10">receipt_long</i>
+              <i class="material-icons opacity-10">people</i>
             </div>
             <span class="nav-link-text ms-1">Visitors Logs</span>
+          </a>
+        </li>
+        @endif
+
+
+        @if(Auth::user()->isAdmin())
+        <li class="nav-item">
+          <a class="nav-link text-white " href="{{ route('visitors.viewTrashedVisitors') }}">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">people</i>
+            </div>
+            <span class="nav-link-text ms-1">Trashed Visitors</span>
           </a>
         </li>
         @endif
@@ -40,7 +52,7 @@
           <li class="nav-item">
             <a class="nav-link text-white " href="/visitors">
               <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i class="material-icons opacity-10">receipt_long</i>
+                <i class="material-icons opacity-10">people</i>
               </div>
               <span class="nav-link-text ms-1">Users</span>
             </a>

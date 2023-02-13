@@ -17,6 +17,7 @@
 
       <h1> @yield('title') </h1>
   
+
   
         @yield('content')
       
@@ -119,6 +120,17 @@
 </script>
 
 
+<script>
+  function restoreVisitors(HTMLElement) {
+    const form = HTMLElement.querySelector('form');
+    const result = confirm('Are you sure you want to restore this visitor?');
+      if(result){
+        form.submit();
+      }
+  }
+</script>
+
+
 
 
 <script>
@@ -155,8 +167,53 @@ if(result){
 </script>
 
 
+{{-- 
+<script>
+	var dtTable;
+	$(document).ready(function(){
+		$('.table td,.table th').addClass('py-1 px-2 align-middle')
+		dtTable = $('.table').dataTable();
+		$('#filter-data').submit(function(e){
+			e.preventDefault()
+			location.href = location.href +"&"+$(this).serialize() 
+		})
 
-
+		$('#print').click(function(){
+            start_loader()
+			dtTable.fnDestroy();
+            var _el = $('<div>')
+            var _head = $('head').clone()
+                _head.find('title').text("Visitors Logs List - Print View")
+            var p = $('#print_out').clone()
+            p.find('tr.text-light').removeClass("text-light bg-navy")
+            _el.append(_head)
+            _el.append('<div class="d-flex justify-content-center">'+
+                      '<div class="col-1 text-right">'+
+                      '<img src="{{ asset('/assets/images/AITI-KACE.png') }}" width="65px" height="65px" />'+
+                      '</div>'+
+                      '<div class="col-10">'+
+                      '<h4 class="text-center">AITI-KACE VISITORS LOG SYSTEM</h4>'+
+                      '<h4 class="text-center">Visitors Logs List</h4>'+
+                      '</div>'+
+                      '<div class="col-1 text-right">'+
+                      '</div>'+
+                      '</div><hr/>')
+            _el.append(p.html())
+            var nw = window.open("","","width=1200,height=900,left=250,location=no,titlebar=yes")
+                     nw.document.write(_el.html())
+                     nw.document.close()
+                     setTimeout(() => {
+                         nw.print()
+                         setTimeout(() => {
+                            nw.close()
+                            end_loader()
+							dtTable = $('.table').dataTable();
+                         }, 200);
+                     }, 500);
+        })
+	})
+	
+</script> --}}
 
 
   @yield('scripts')
