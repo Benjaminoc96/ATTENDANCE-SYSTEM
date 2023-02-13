@@ -46,7 +46,7 @@
             <a class="" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
-
+    <br>
             <button class="login" type="submit">
                 {{ __('Register') }}
             </button>

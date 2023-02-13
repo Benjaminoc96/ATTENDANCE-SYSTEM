@@ -2,12 +2,12 @@
 <!-- Session Status -->
 <x-auth-session-status class="body" :status="session('status')" />
 <!-- @section('content') -->
-<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="section">
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<form method="POST" action="{{ route('login') }}" class="">
-    @csrf
-    <div class="section">
+    <form method="POST" action="{{ route('login') }}" class="">
+        @csrf
         <div class="section2">
             <img src="../../../public/images/logo.png" alt="">
 
@@ -56,6 +56,6 @@
                 <a href="">Google</a>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 <!-- @endsection -->
