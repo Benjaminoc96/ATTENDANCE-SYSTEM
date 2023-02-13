@@ -1,5 +1,7 @@
 body {
-    background-image: url("../images/loginbg.jpg");
+    background-image: url("../images/bg.png");
+    background-position: bottom;
+    /* background-repeat: no-repeat; */
 }
 a, h2, li, ul, i {
     margin: 0;
@@ -39,9 +41,9 @@ input::placeholder {
 }
 
 .login {
-    width: 70%;
+    width: 55%;
     margin: 1rem 0;
-    background-color: rgba(39, 125, 39, 0.6);
+    background-color: rgb(8, 8, 153);
 }
 
 .login:hover {
