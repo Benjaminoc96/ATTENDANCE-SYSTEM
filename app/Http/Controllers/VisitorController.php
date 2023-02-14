@@ -56,45 +56,6 @@ class VisitorController extends Controller
     }
 
 
-
-
-    // VIEW ALL TRASHED VISITORS
-
-    public function viewTrashedVisitors()
-    {
-        $visitor = Visitor::onlyTrashed();
-        return view('visitors.trashed', [
-            'visitor' => $visitor,
-        ])->with('findVisitors', Visitor::onlyTrashed());
-    }
-
-
-
-
-
-    public function restoreVisitors($id)
-    {
-        $visitor = Visitor::withTrashed()->where('id', $id)->first();
-        $visitor->restore();
-        $listTrashedVisitors = route('visitors.viewTrashedVisitors');
-        return redirect($listTrashedVisitors)->with('status', Visitor::all());
-    }
-
-
-
-
-    public function visitorslog()
-    {
-        return view('visitors.visitorslog');
-    }
-
-
-    public function printVisitorLog()
-    {
-        return view('visitors.printVisitorLog');
-    }
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -109,7 +70,7 @@ class VisitorController extends Controller
             'visitor' => $visitor,
             'title' => $title,
             'action' => $action
-        ]);
+        ])->with('findVisitors', Visitor::all());
     }
 
     /**
@@ -227,7 +188,16 @@ class VisitorController extends Controller
 
 
 
+    public function visitorslog()
+    {
+        return view('visitors.visitorslog');
+    }
 
+
+    public function printVisitorLog()
+    {
+        return view('visitors.printVisitorLog');
+    }
 
 
     function updateOnlyLogIn($id){
@@ -239,6 +209,7 @@ class VisitorController extends Controller
     }
 
 
+    
 
     function updateOnlyLogOut($id){
 
