@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+
 class VisitorController extends Controller
 {
     /**
@@ -38,7 +39,7 @@ class VisitorController extends Controller
     {
         $search = $request['search'] ?? "";
         if ($search != "") {
-            $findVisitors = Visitor::where('name', 'LIKE', "$search%")->get();
+            $findVisitors = Visitor::where('name', 'LIKE', "$search%")->paginate();
         } else {
             $findVisitors = Visitor::paginate(3);
         }
@@ -70,7 +71,7 @@ class VisitorController extends Controller
             'visitor' => $visitor,
             'title' => $title,
             'action' => $action
-        ])->with('findVisitors', Visitor::all());
+        ])->with('findVisitors', Visitor::paginate());
     }
 
     /**
@@ -209,7 +210,7 @@ class VisitorController extends Controller
     }
 
 
-    
+
 
     function updateOnlyLogOut($id){
 

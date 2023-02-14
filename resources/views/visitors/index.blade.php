@@ -65,13 +65,10 @@
               <div class="col">
         <div class="mb-3 form-group">
           <label for="contact" class="form-label">Contact</label>
-<<<<<<< HEAD
+
           <input type="tel" class="form-control @error('contact') is-invalid @enderror" name="contact" placeholder="Enter Phone Number"
           value="{{ old('contact') ? old('contact') : $visitor->contact }}" required>
-=======
-          <input type="tel" class="form-control @error('contact') is-invalid @enderror" name="contact" placeholder="Enter Phone Number" 
-          value="{{ old('contact') ? old('contact') : $visitor->contact }}">
->>>>>>> c76849ba4155c6b010e99621da6ca2a8a6225fdf
+
           @error('contact')
           <div class="invalid-feedback">
             {{ $message }}
@@ -165,23 +162,16 @@
         <div class="mb-3 form-group">
           <label for="purpose" class="form-label">Purpose</label>
 
-<<<<<<< HEAD
+
         <textarea  cols="5" rows="5" class="form-control @error('purpose') is-invalid @enderror" id="name" name="purpose" placeholder="Enter purpose"
         value="{{ old('purpose') ? old('purpose') : $visitor->purpose }}" required></textarea>
-=======
-        <textarea  cols="5" rows="5" class="form-control @error('purpose') is-invalid @enderror" id="name" name="purpose" placeholder="Enter purpose" 
-        value="{{ old('purpose') ? old('purpose') : $visitor->purpose }}"></textarea>
->>>>>>> c76849ba4155c6b010e99621da6ca2a8a6225fdf
         @error('purpose')
         <div class="invalid-feedback">
           {{ $message }}
         </div>
         @enderror
-<<<<<<< HEAD
           {{-- <input type="text" class="form-control @error('purpose') is-invalid @enderror" id="name" name="purpose" placeholder="Enter purpose"
           value="{{ old('purpose') ? old('purpose') : $visitor->purpose }}"> --}}
-=======
->>>>>>> c76849ba4155c6b010e99621da6ca2a8a6225fdf
 
         </div>
 
@@ -201,20 +191,18 @@
           </div>
 
         </form>
-                </div>
-            </div>
+        </div>
+        </div>
 </div>
-
-        <div class="row m-2">
+</div>
+    <div class="row m-2">
             <form action="">
-                <div class="form-group" action="action_page.php">
-                <input type="text" name="search" id="search" class="form-control" placeholder="Search.." value="{{$search}}">
-                <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                <div class="form-group" action="">
+                <input type="text" name="search" id="search" class="form-control" placeholder="Search.." value="">
+                <button class="btn btn-primary">Search</button>
                 </div>
             </form>
-
-</div>
-
+    </div>
         <div class="row">
           <div class="col-12">
             <div class="card my-4">
@@ -341,7 +329,7 @@
                         <a type="submit" class="btn btn-secondary btn-sm" href="{{route('visitors.show', ['id'=> $visitor->id])}}">
                           View
                         </a>
-              
+
                         <a type="submit" class="btn btn-success btn-sm" id="editvisitor" href="{{route('visitors.edit', ['id'=> $visitor->id])}}">
                           Edit
                         </a>
@@ -357,18 +345,14 @@
                       @endforelse
                     </tbody>
                   </table>
-                  {{$findVisitors->links()}}
+                  {{$findVisitors->links() }}
                 </div>
               </div>
             </div>
           </div>
         </div>
-<<<<<<< HEAD
 
-=======
- 
-        
->>>>>>> c76849ba4155c6b010e99621da6ca2a8a6225fdf
+
 
 @endsection
 
@@ -378,7 +362,7 @@
           const windowLocation = window.location.href;
           const openForm = windowLocation.includes('create');
           if(openForm){
-            const modalElement = document.getElementById('addvisitor'); 
+            const modalElement = document.getElementById('addvisitor');
             const addVisitorModal = bootstrap.Modal.getOrCreateInstance(modalElement);
       console.log(addVisitorModal);
           addVisitorModal.show();
@@ -393,7 +377,7 @@
   const windowLocation = window.location.href;
   const openForm = windowLocation.includes('edit');
   if(openForm){
-    const modalElement = document.getElementById('editvisitor'); 
+    const modalElement = document.getElementById('editvisitor');
     const editVisitorModal = bootstrap.Modal.getOrCreateInstance(modalElement);
 console.log(editVisitorModal);
   editVisitorModal.show();
