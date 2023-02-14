@@ -7,7 +7,7 @@
   {{-- <script src="{{ asset('/js/datatables/dataTables.bootstrap4.min.js') }}"></script> --}}
 
   <!-- Core plugin JavaScript-->
-  {{-- <script src="{{ asset('/js/sweetalert.min.js') }}"></script> --}}
+  <script src="{{ asset('/js/sweetalert.min.js') }}"></script>
  
 
 
