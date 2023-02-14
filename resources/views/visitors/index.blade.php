@@ -35,9 +35,6 @@
                     </button>
                   </div>
 
-
-
-                  
         <form action="{{ $action }}" method="POST" >
           @csrf
 
@@ -55,7 +52,7 @@
         <div class="mb-3 form-group">
           <label for="name" class="form-label">Name</label>
           <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter Name"
-          value="{{ old('name') ? old('name') : $visitor->name }}">    
+          value="{{ old('name') ? old('name') : $visitor->name }}">
           @error('name')
           <div class="invalid-feedback">
             {{ $message }}
@@ -68,7 +65,7 @@
               <div class="col">
         <div class="mb-3 form-group">
           <label for="contact" class="form-label">Contact</label>
-          <input type="tel" class="form-control @error('contact') is-invalid @enderror" name="contact" placeholder="Enter Phone Number" 
+          <input type="tel" class="form-control @error('contact') is-invalid @enderror" name="contact" placeholder="Enter Phone Number"
           value="{{ old('contact') ? old('contact') : $visitor->contact }}" required>
           @error('contact')
           <div class="invalid-feedback">
@@ -163,14 +160,14 @@
         <div class="mb-3 form-group">
           <label for="purpose" class="form-label">Purpose</label>
 
-        <textarea  cols="5" rows="5" class="form-control @error('purpose') is-invalid @enderror" id="name" name="purpose" placeholder="Enter purpose" 
+        <textarea  cols="5" rows="5" class="form-control @error('purpose') is-invalid @enderror" id="name" name="purpose" placeholder="Enter purpose"
         value="{{ old('purpose') ? old('purpose') : $visitor->purpose }}" required></textarea>
         @error('purpose')
         <div class="invalid-feedback">
           {{ $message }}
         </div>
         @enderror
-          {{-- <input type="text" class="form-control @error('purpose') is-invalid @enderror" id="name" name="purpose" placeholder="Enter purpose" 
+          {{-- <input type="text" class="form-control @error('purpose') is-invalid @enderror" id="name" name="purpose" placeholder="Enter purpose"
           value="{{ old('purpose') ? old('purpose') : $visitor->purpose }}"> --}}
 
         </div>
@@ -195,7 +192,16 @@
             </div>
 </div>
 
-    
+        <div class="row m-2">
+            <form action="">
+                <div class="form-group" action="action_page.php">
+                <input type="text" name="search" id="search" class="form-control" placeholder="Search.." value="{{$search}}">
+                <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+
+</div>
+
         <div class="row">
           <div class="col-12">
             <div class="card my-4">
@@ -238,7 +244,7 @@
                           <div class="d-flex px-2 py-1 text-center">
                             <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm"> {{$visitor->contact}} </h6>
-                              
+
                             </div>
                           </div>
                         </td>
@@ -248,7 +254,7 @@
                           <div class="d-flex px-2 py-1 justify-content-center">
                             <div class="d-flex flex-column">
                             <h6 class="mb-0 text-sm"> {{$visitor->address}} </h6>
-                              
+
                             </div>
                           </div>
                         </td>
@@ -258,7 +264,7 @@
                           <div class="d-flex px-2 py-1 justify-content-center">
                             <div class="d-flex flex-column">
                             <h6 class="mb-0 text-sm"> {{$visitor->purpose}} </h6>
-                              
+
                             </div>
                           </div>
                         </td>
@@ -268,7 +274,7 @@
                           <div class="d-flex px-2 py-1 justify-content-center">
                             <div class="d-flex flex-column">
                             <h6 class="mb-0 text-sm"> {{$visitor->department}} </h6>
-                              
+
                             </div>
                           </div>
                         </td>
@@ -278,7 +284,7 @@
                           <div class="d-flex px-2 py-1 justify-content-center">
                             <div class="d-flex flex-column">
                             <h6 class="mb-0 text-sm"> {{$visitor->staff}} </h6>
-                              
+
                             </div>
                           </div>
                         </td>
@@ -297,7 +303,7 @@
                           </button>
                           @endif
                           @else
-                  
+
                           @if(Auth::user()->isAdmin()  or Auth::user()->isReceptionist())
                           <button type="submit" class="btn btn-danger btn-sm" onclick="logVisitorOut(this)" data-type='IN'>
                             <form action="{{route('visitors.updateOnlyLogIn', ['id'=> $visitor->id])}}" method="post">
@@ -307,13 +313,13 @@
                             {{ $visitor->log_type }}
                           </button>
                           @endif
-                  
-                  
+
+
                           @endif
                           </div>
                           </td>
 
-                        
+
 
 
                             <td>
@@ -338,18 +344,19 @@
                           </td>
 
                       </tr>
-                  
+
                       @empty
                       <p>No visitor record found</p>
                       @endforelse
                     </tbody>
                   </table>
+                  {{$findVisitors->links()}}
                 </div>
               </div>
             </div>
           </div>
         </div>
- 
+
 
 @endsection
 

@@ -34,8 +34,17 @@ class VisitorController extends Controller
 
 
 
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request['search'] ?? "";
+        if ($search != "") {
+            $findVisitors = Visitor::where('name', 'LIKE', "$search%")->get();
+        } else {
+            $findVisitors = Visitor::paginate(3);
+        }
+        $data = compact('findVisitors', 'search');
+
+
         $title = 'Add Visitor';
         $action = route('visitors.store');
         $visitor = new Visitor;
@@ -43,7 +52,7 @@ class VisitorController extends Controller
             'visitor' => $visitor,
             'title' => $title,
             'action' => $action
-        ])->with('findVisitors', Visitor::all());
+        ])->with(($data));
     }
 
 
@@ -193,7 +202,7 @@ class VisitorController extends Controller
         $visitor->purpose = $data['purpose'];
         $visitor->visitor_type = $data['visitor_type'];
         $visitor->log_type = $data['log_type'];
-    
+
         $visitor->save();
 
         $visitorRoute = route('visitors.index');
