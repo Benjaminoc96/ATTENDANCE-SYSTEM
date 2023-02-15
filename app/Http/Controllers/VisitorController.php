@@ -24,7 +24,7 @@ class VisitorController extends Controller
         'department'=>'required|max:125',
         'staff'=>'required|max:150|regex:/^[a-zA-Z ]*$/',
         'purpose'=>'required|max:125',
-        'contact' => ['required','digits:10']
+        'contact' => ['required', 'digits:10']
     ];
 
 
@@ -39,7 +39,7 @@ class VisitorController extends Controller
     {
         $search = $request['search'] ?? "";
         if ($search != "") {
-            $findVisitors = Visitor::where('name', 'LIKE', "$search%")->paginate();
+            $findVisitors = Visitor::where('name', 'LIKE', "%$search%")->paginate();
         } else {
             $findVisitors = Visitor::paginate(3);
         }
