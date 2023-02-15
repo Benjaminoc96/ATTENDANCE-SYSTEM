@@ -3,11 +3,11 @@
 @section ('content')
 {{-- <div class="container"> --}}
     <h1 class="text-center">Visitors List</h1>
-    <div class="card-tools">
+    {{-- <div class="card-tools">
       <form action="" method="POST">
         <button type="submit" class="btn btn-flat btn-success" style="float: right" id="print"><span class="fas fa-print"></span>  Print</button>
       </form>
-		</div>
+		</div> --}}
 
 
 
@@ -195,14 +195,17 @@
         </div>
 </div>
 </div>
-    <div class="row m-2">
+    {{-- <div class="row m-2">
             <form action="">
                 <div class="form-group" action="">
                 <input type="text" name="search" id="search" class="form-control" placeholder="Search.." value="">
                 <button class="btn btn-primary">Search</button>
                 </div>
             </form>
-    </div>
+    </div> --}}
+
+
+
         <div class="row">
           <div class="col-12">
             <div class="card my-4">
@@ -213,7 +216,7 @@
               </div>
               <div class="card-body px-0 pb-2">
                 <div class="table-responsive p-0">
-                  <table class="table align-items-center mb-0">
+                  <table id="myTable" class="table align-items-center mb-0">
                     <thead>
                       <tr>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
@@ -352,11 +355,47 @@
           </div>
         </div>
 
-
+        <style>
+          .select,
+          #locale {
+            width: 100%;
+          }
+          .like {
+            margin-right: 10px;
+          }
+        </style>
 
 @endsection
 
+
+
+
+{{-- <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">    --}}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+
+
 @push('scripts')
+
+
+
+
+
+<script>
+  $(document).ready(function(){
+      $('#myTable').dataTable();
+  });
+  </script>
+
+
+
+
+
+
   <script>
 
           const windowLocation = window.location.href;

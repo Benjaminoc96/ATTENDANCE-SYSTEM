@@ -3,18 +3,14 @@
 @section ('content')
 {{-- <div class="container"> --}}
     <h1 class="text-center">Users List</h1>
-    <div class="card-tools">
+    {{-- <div class="card-tools">
       <form action="" method="POST">
         <button type="submit" class="btn btn-flat btn-success" style="float: right" id="print"><span class="fas fa-print"></span>  Print</button>
       </form>
-		</div>
+		</div> --}}
 
 
 
-
-    {{-- <div>
-        <a href="{{route('visitors.create')}}" class="btn btn-primary">Add</a>
-    </div> --}}
 
 <div class="card-header py-3">
   <h6 class="m-0 font-weight-bold text-primary">
