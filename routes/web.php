@@ -37,6 +37,8 @@ Route::prefix('visitors')->middleware('auth')->name('visitors.')->controller(Vis
     Route::patch('/updateOnlyLogIn/{id}', 'updateOnlyLogIn')->name('updateOnlyLogIn');
     Route::patch('/{id}', 'updateOnlyLogOut')->name('updateOnlyLogOut');
     Route::post('/printVisitorLog', 'printVisitorLog')->name('printVisitorLog');
+    Route::get('/newPurpose/{id}', 'newPurpose')->name('newPurpose');
+    Route::post('/storenewPurpose/{id}', 'storenewPurpose')->name('storenewPurpose');
 });
 
 
