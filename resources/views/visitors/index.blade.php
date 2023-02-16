@@ -127,7 +127,7 @@
         <div class="mb-3 form-group">
           <label for="department" class="form-label">Department</label>
           <select class="form-control @error('department') is-invalid @enderror" name="department" id="department">
-            <option>Select Department</option>
+            <label>Select Department</label>
             <option value="Faculty" {{ (old('department') == "Faculty")? "selected" : "" }}>Faculty</option>
             <option value="Research and Innovation" {{ (old('department') == "Research and Innovation")? "selected" : "" }}>Research and Innovation</option>
           </select>

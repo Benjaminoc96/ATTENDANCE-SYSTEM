@@ -4,7 +4,7 @@
 
 @section ('content')
 
-<?php 
+<?php
 $from = isset($_GET['from']) ? $_GET['from'] : date("Y-m-d",strtotime(date('Y-m-d')." -1 week"));
 $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
 ?>
@@ -27,7 +27,7 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
 <div class="card card-outline card-primary">
     <h1 class="text-center">Visitors Log List</h1>
     <div class="card-tools">
-          <a  href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-flat btn-success" style="float: right;"><span class="fas fa-print"></span>  
+          <a  href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-flat btn-success" style="float: right;"><span class="fas fa-print"></span>
             Print
           </a>
     </div>
@@ -93,13 +93,13 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
                                 </tr>
                             </thead>
                             <tbody>
-                              <?php 
+                              <?php
 
                               $conn = mysqli_connect("localhost","root","","logging");
                               $i = 1;
                               $qry = $conn->query("select visitors_logs.created_at, visitors.name, visitors.contact, visitors.address, visitors.purpose, visitors_logs.log_type from visitors inner join visitors_logs on visitors.id = visitors_logs.visitors_id where date(visitors_logs.created_at) BETWEEN '{$from}' and '{$to}'");
                               while($row = $qry->fetch_assoc()):
-                                  
+
                               ?>
                                   <tr>
                       <td class=""><?php echo $i++; ?></td>
@@ -141,7 +141,7 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
                       <div class="table-responsive p-0">
 
 
-                        
+
        <table id="myTables" class="table align-items-center mb-0">
                           <thead>
                             <tr>
@@ -154,13 +154,13 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
                             </tr>
                           </thead>
                           <tbody>
-                            <?php 
+                            <?php
 
                             $conn = mysqli_connect("localhost","root","","logging");
                             $i = 1;
                             $qry = $conn->query("select visitors_logs.created_at, visitors.name, visitors.visitor_type, visitors.contact, visitors.address, visitors.purpose, visitors_logs.log_type from visitors inner join visitors_logs on visitors.id = visitors_logs.visitors_id where date(visitors_logs.created_at) BETWEEN '{$from}' and '{$to}'");
                             while($row = $qry->fetch_assoc()):
-                                
+
                             ?>
                                 <tr>
                     <td class="text-center"><?php echo $i++; ?></td>
@@ -187,7 +187,7 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
-                       
+
       </table>
 
 
