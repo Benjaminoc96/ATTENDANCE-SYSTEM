@@ -15,14 +15,15 @@
     {{-- <div>
         <a href="{{route('visitors.create')}}" class="btn btn-primary">Add</a>
     </div> --}}
-
-<div class="card-header py-3">
-  <h6 class="m-0 font-weight-bold text-primary">
-      <a type="button" class="btn btn-info" href="{{ route('visitors.create') }}">
-          Add Visitor
-      </a>
-  </h6>
-</div>
+@if(Auth::user()->isAdmin()  or Auth::user()->isReceptionist())
+    <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">
+        <a type="button" class="btn btn-info" href="{{ route('visitors.create') }}">
+            Add Visitor
+        </a>
+    </h6>
+    </div>
+@endif
 
 
 <div class="modal fade" id="addvisitor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -34,6 +35,7 @@
                       <a href="{{ route('visitors.index') }}"><span aria-hidden="true">&times;</span></a>
                     </button>
                   </div>
+
 
         <form action="{{ $action }}" method="POST" >
           @csrf
