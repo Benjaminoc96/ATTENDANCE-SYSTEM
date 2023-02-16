@@ -1,10 +1,10 @@
 @extends ('layouts.master')
 
-
+{{-- @section('title', $title) --}}
 
 @section ('content')
 
-<?php
+<?php 
 $from = isset($_GET['from']) ? $_GET['from'] : date("Y-m-d",strtotime(date('Y-m-d')." -1 week"));
 $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
 ?>
@@ -27,7 +27,7 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
 <div class="card card-outline card-primary">
     <h1 class="text-center">Visitors Log List</h1>
     <div class="card-tools">
-          <a  href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-flat btn-success" style="float: right;"><span class="fas fa-print"></span>
+          <a  href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-flat btn-success" style="float: right;"><span class="fas fa-print"></span>  
             Print
           </a>
     </div>
@@ -73,49 +73,58 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
             </style>
                 <div class="container-fluid">
               {{-- <table id="myTable" class="table table-bordered table-stripped table-hover table-strip"> --}}
-                <table class="table table-bordered table-stripped">
+                <table id="myTable" class="table table-bordered table-stripped table-hover">
                             <colgroup>
                                 <col width="5%">
-                                <col width="15%">
-                                <col width="16%">
+                                <col width="10%">
+                                <col width="22%">
                                 <col width="22%">
                                 <col width="22%">
                                 <col width="10%">
                             </colgroup>
-                            <thead>
+                            <thead style="font-size: 16px;font-weight: bold;">
                                 <tr>
                                     <th>#</th>
                                     <th>Date/Time</th>
-                                    <th>Name</th>
-                                    <th>Details</th>
+                                    <th>Visitor Details</th>
+                                    <th>Visit Details</th>
                                     <th>Purpose</th>
                                     <th>Log Type</th>
                                 </tr>
                             </thead>
                             <tbody>
-                              <?php
+                              <?php 
 
                               $conn = mysqli_connect("localhost","root","","logging");
                               $i = 1;
-                              $qry = $conn->query("select visitors_logs.created_at, visitors.name, visitors.contact, visitors.address, visitors.purpose, visitors_logs.log_type from visitors inner join visitors_logs on visitors.id = visitors_logs.visitors_id where date(visitors_logs.created_at) BETWEEN '{$from}' and '{$to}'");
+                              $qry = $conn->query("select visitors_logs.created_at, visitors.department, visitors.staff,  visitors.name, visitors.contact, visitors.address, visitors.purpose, visitors_logs.log_type from visitors inner join visitors_logs on visitors.id = visitors_logs.visitors_id where date(visitors_logs.created_at) BETWEEN '{$from}' and '{$to}'");
                               while($row = $qry->fetch_assoc()):
-
+                                  
                               ?>
-                                  <tr>
+                   <tr>
                       <td class=""><?php echo $i++; ?></td>
-                      <td class="text-right"><?php echo date("Y-m-d H:i",strtotime($row['created_at'])) ?></td>
-                      <td class=""><?php echo $row['name'] ?></td>
+                      <td class="text-right" style="font-size: 16px;"><?php echo date("Y-m-d H:i",strtotime($row['created_at'])) ?></td>
                       <td>
                         <p class="m-0">
                           <small>
-                            <span class="text-muted">Contact #: </span><span><?php echo $row['contact'] ?></span><br>
-                            <span class="text-muted">Address: </span><span><?php echo $row['address'] ?></span>
+                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Name: </span><span style="font-size: 16px;"><?php echo $row['name'] ?></span><br>
+                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Contact: </span><span style="font-size: 16px;"><?php echo $row['contact'] ?></span>
                           </small>
                         </p>
                       </td>
-                      <td><?php echo $row['purpose'] ?></td>
+
+                      <td>
+                        <p class="m-0">
+                          <small>
+                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Department: </span><span style="font-size: 16px;"><?php echo $row['department'] ?></span><br>
+                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Staff: </span><span style="font-size: 16px;"><?php echo $row['staff'] ?></span>
+                          </small>
+                        </p>
+                      </td>
+                      
+                      <td style="font-size: 16px;"><?php echo $row['purpose'] ?></td>
                       <td class="text-center"><?php echo $row['log_type'] ?></td>
-                                  </tr>
+                    </tr>
                               <?php endwhile; ?>
                           </tbody>
                       </table>
@@ -141,7 +150,7 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
                       <div class="table-responsive p-0">
 
 
-
+                        
        <table id="myTables" class="table align-items-center mb-0">
                           <thead>
                             <tr>
@@ -154,13 +163,13 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
                             </tr>
                           </thead>
                           <tbody>
-                            <?php
+                            <?php 
 
                             $conn = mysqli_connect("localhost","root","","logging");
                             $i = 1;
                             $qry = $conn->query("select visitors_logs.created_at, visitors.name, visitors.visitor_type, visitors.contact, visitors.address, visitors.purpose, visitors_logs.log_type from visitors inner join visitors_logs on visitors.id = visitors_logs.visitors_id where date(visitors_logs.created_at) BETWEEN '{$from}' and '{$to}'");
                             while($row = $qry->fetch_assoc()):
-
+                                
                             ?>
                                 <tr>
                     <td class="text-center"><?php echo $i++; ?></td>
@@ -187,7 +196,7 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
                                 </tr>
                             <?php endwhile; ?>
                         </tbody>
-
+                       
       </table>
 
 
@@ -209,10 +218,10 @@ $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
 
 {{-- TABLE SEARCH AND PAGINATION --}}
 
-{{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> --}}
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 
 @push('scripts')
