@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visitor;
+use App\Models\Purpose;
+use Carbon\Exceptions\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +26,7 @@ class VisitorController extends Controller
         'department'=>'required|max:125',
         'staff'=>'required|max:150|regex:/^[a-zA-Z ]*$/',
         'purpose'=>'required|max:125',
-        'contact' => ['required', 'digits:10']
+        'contact' => ['required', 'numeric', 'digits:10']
     ];
 
 
@@ -35,25 +37,76 @@ class VisitorController extends Controller
 
 
 
-    public function index(Request $request)
+
+
+
+
+    public function newPurpose($id)
     {
-        $search = $request['search'] ?? "";
-        if ($search != "") {
-            $findVisitors = Visitor::where('name', 'LIKE', "%$search%")->paginate();
-        } else {
-            $findVisitors = Visitor::paginate(3);
+        $visitor = Visitor::findById($id);
+        $title = 'ADD NEW PURPOSE FOR VISITING';
+        $action = route('visitors.storenewPurpose', ['id' => $id]);
+
+        return view('visitors.newpurposeform', [
+            'edit' => true,
+            'title' => $title,
+            'action' => $action,
+            'visitor' => $visitor
+        ]);
+    }
+
+
+
+
+
+
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function storenewPurpose(Request $request, $id)
+    {
+        $visitorPurpose = Visitor::findById($id);
+        $data = $request->all();
+
+        $rules = $this->rules;
+        $validator = Validator::make($data, $rules, $this->messages);
+
+        if ($validator->fails()) {
+            return redirect(route('visitors.newPurpose', ['id' => $id]))
+            ->withErrors($validator)
+            ->withInput();
         }
-        $data = compact('findVisitors', 'search');
+
+        $visitorPurpose->id = $data['id'];
+        $visitorPurpose->department = $data['department'];
+        $visitorPurpose->staff = $data['staff'];
+        $visitorPurpose->purpose = $data['purpose'];
 
 
-        $title = 'Add Visitor';
+        $visitorPurpose->save();
+
+        $visitorRoute = route('visitors.index');
+        return redirect($visitorRoute)->with('status', "New Purpose for Visiting has been added Successfully");
+    }
+
+
+
+
+
+    public function index()
+    {
+        $title = 'Visitors List';
         $action = route('visitors.store');
         $visitor = new Visitor;
         return view('visitors.index', [
             'visitor' => $visitor,
             'title' => $title,
             'action' => $action
-        ])->with(($data));
+        ])->with('findVisitors', Visitor::all());
     }
 
 
@@ -74,6 +127,7 @@ class VisitorController extends Controller
         ])->with('findVisitors', Visitor::paginate());
     }
 
+
     /**
      * Store a newly created resource in storage.
      *
@@ -85,7 +139,6 @@ class VisitorController extends Controller
         $data = $request->all();
         $rules = $this->rules;
         $rules['contact'] [] = Rule::unique('visitors');
-       // $rules['phone'] [] = Rule::unique('students');
        $validator = Validator::make($data, $rules, $this->messages);
 
        if ($validator->fails()) {
@@ -96,8 +149,8 @@ class VisitorController extends Controller
 
     $visitor = Visitor::create($data);
 
-        $visitorListRoute = route('visitors.index');
-        return redirect($visitorListRoute)->with('status', "$visitor->name Successfully Logged In");
+    $visitorListRoute = route('visitors.index');
+    return redirect($visitorListRoute)->with('status', "$visitor->name Successfully Logged In");
     }
 
     /**
@@ -130,6 +183,13 @@ class VisitorController extends Controller
             'visitor' => $visitor
         ]);
     }
+
+
+
+
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -191,7 +251,10 @@ class VisitorController extends Controller
 
     public function visitorslog()
     {
-        return view('visitors.visitorslog');
+        $title = 'Visitors log List';
+        return view('visitors.visitorslog', [
+            'title' => $title,
+        ]);
     }
 
 
