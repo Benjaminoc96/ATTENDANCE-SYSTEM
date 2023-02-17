@@ -19,7 +19,7 @@
 
 
 <div class="card card-outline card-primary">
-    <h1 class="text-center">Visitors Log List</h1>
+
     <div class="card-tools">
           <a  href="javascript:void(0);" onclick="printPageArea('printableArea')" class="btn btn-flat btn-success" style="float: right;"><span class="fas fa-print"></span>  
             Print
@@ -28,32 +28,7 @@
 
 
   <div class="card-body">
-		<fieldset>
-			<legend class="text-info">Filter Date Range</legend>
-			<form action="" id="filter-data">
-				<div class="row align-items-end">
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="date_from" class="control-label text-info">From</label>
-							<input type="date" id="from" name="from" class="form-control form-control-sm rounded-0" value="{{ $from }}" required>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="date_to" class="control-label text-info">To</label>
-							<input type="date" id="to" name="to" class="form-control form-control-sm rounded-0" value="{{ $to }}" required>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<button class="btn btn-flat btn-sm btn-primary"><i class="fa fa-filter"></i> Filter</button>
-						</div>
-					</div>
-				</div>
-			</form>
-		</fieldset>
 
-    <br><br>
 
 <div id="printableArea">
             <style>
@@ -66,6 +41,7 @@
               }
             </style>
                 <div class="container-fluid">
+                  <h2 class="text-center">Visitors Not Logged Out Today({{ $to }})</h2>
                 <table id="myTable" class="table table-bordered table-stripped table-hover">
                             <colgroup>
                                 <col width="5%">
@@ -86,7 +62,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                              @foreach ($findVisitorsLogs as $findVisitorsLog)
+                              @forelse ($findVisitorsLogs as $findVisitorsLog)
 
 
                         <tr>
@@ -113,7 +89,9 @@
                       <td style="font-size: 16px;">{{$findVisitorsLog->purpose}}</td>
                       <td class="text-center">{{$findVisitorsLog->log_type}}</td>
                     </tr>
-                          @endforeach
+                    @empty
+                    <p>No visitor record found</p>
+                    @endforelse
                           </tbody>
                       </table>
           </div>
@@ -132,10 +110,10 @@
 
 {{-- TABLE SEARCH AND PAGINATION --}}
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+{{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> --}}
 
 
 @push('scripts')

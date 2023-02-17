@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Visitor;
 use App\Models\Purpose;
-use Carbon\Exceptions\Exception;
+use App\Models\Visitor;
+use App\Models\Visitorslog;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Carbon\Exceptions\Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,67 +33,9 @@ class VisitorController extends Controller
 
 
     private $messages = [
-        'name.regex' => 'The name field can only contain alphabet and spaces'
+        'name.regex' => 'The name field can only contain alphabet and spaces',
+        'staff.regex' => 'The staff name can only contain alphabet'
     ];
-
-
-
-
-
-
-
-    public function newPurpose($id)
-    {
-        $visitor = Visitor::findById($id);
-        $title = 'ADD NEW PURPOSE FOR VISITING';
-        $action = route('visitors.storenewPurpose', ['id' => $id]);
-
-        return view('visitors.newpurposeform', [
-            'edit' => true,
-            'title' => $title,
-            'action' => $action,
-            'visitor' => $visitor
-        ]);
-    }
-
-
-
-
-
-
-        /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function storenewPurpose(Request $request, $id)
-    {
-        $visitorPurpose = Visitor::findById($id);
-        $data = $request->all();
-
-        $rules = $this->rules;
-        $validator = Validator::make($data, $rules, $this->messages);
-
-        if ($validator->fails()) {
-            return redirect(route('visitors.newPurpose', ['id' => $id]))
-            ->withErrors($validator)
-            ->withInput();
-        }
-
-        $visitorPurpose->id = $data['id'];
-        $visitorPurpose->department = $data['department'];
-        $visitorPurpose->staff = $data['staff'];
-        $visitorPurpose->purpose = $data['purpose'];
-
-
-        $visitorPurpose->save();
-
-        $visitorRoute = route('visitors.index');
-        return redirect($visitorRoute)->with('status', "New Purpose for Visiting has been added Successfully");
-    }
-
 
 
 
@@ -108,6 +51,79 @@ class VisitorController extends Controller
             'action' => $action
         ])->with('findVisitors', Visitor::all());
     }
+
+
+
+
+    
+    public function visitorslog()
+    {
+        $from = isset($_GET['from']) ? $_GET['from'] : date("Y-m-d",strtotime(date('Y-m-d')." -1 week"));
+        $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
+        $i = +1;
+        $title = 'Visitors Log List';
+        return view('visitors.visitorslog', [
+            'title' => $title,
+            'from' => $from,
+            'to' => $to,
+            'i' => $i
+        ])->with('findVisitorsLogs', Visitorslog::all());
+    }
+
+
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function newpurpose($id)
+    {
+        $title = 'Add Visitor New Purpose';
+        $action = route('visitors.storenewpurpose');
+        $visitor = Visitor::findById($id);
+        return view('visitors.index', [
+            'visitor' => $visitor,
+            'title' => $title,
+            'action' => $action
+        ])->with('findVisitors', Visitor::paginate());
+    }
+
+
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function storenewpurpose(Request $request)
+    {
+        $data = $request->all();
+        $id = $data['visitors_id'];
+       // dd($data);
+
+       Purpose::create($data);
+        
+        // $rules = $this->rules;
+        // $validator = Validator::make($data, $rules, $this->messages);
+
+        // if ($validator->fails()) {
+        //     return redirect(route('visitors.newpurpose', ['id' => $id]))
+        //     ->withErrors($validator)
+        //     ->withInput();
+        // }
+
+        
+
+        $visitorRoute = route('visitors.index');
+        return redirect($visitorRoute)->with('status', "New Purpose for Visiting has been added Successfully");
+    }
+
+
+
 
 
     /**
@@ -126,6 +142,11 @@ class VisitorController extends Controller
             'action' => $action
         ])->with('findVisitors', Visitor::paginate());
     }
+
+
+
+
+
 
 
     /**
@@ -147,7 +168,19 @@ class VisitorController extends Controller
         ->withInput();
     }
 
-    $visitor = Visitor::create($data);
+    $visitor = Visitor::create([
+        'name' => $data['name'],
+        'contact' => $data['contact'],
+        'address' => $data['address'],
+        'visitor_type' => $data['visitor_type'],
+    ]);
+
+    $purpose = Purpose::create([
+        'visitors_id' => $visitor->id,
+        'department' => $data['department'],
+        'staff' => $data['staff'],
+        'purpose' => $data['purpose'],
+    ]);
 
     $visitorListRoute = route('visitors.index');
     return redirect($visitorListRoute)->with('status', "$visitor->name Successfully Logged In");
@@ -176,13 +209,14 @@ class VisitorController extends Controller
         $title = 'Edit Visitor';
         $action = route('visitors.update', ['id' => $id]);
 
-        return view('visitors.form', [
+        return view('visitors.index', [
             'edit' => true,
             'title' => $title,
             'action' => $action,
             'visitor' => $visitor
-        ]);
-    }
+        ])->with('findVisitors', Visitor::paginate());
+
+}
 
 
 
@@ -249,19 +283,20 @@ class VisitorController extends Controller
 
 
 
-    public function visitorslog()
-    {
-        $title = 'Visitors log List';
-        return view('visitors.visitorslog', [
-            'title' => $title,
-        ]);
-    }
+    // public function visitorslog()
+    // {
+    //     $title = 'Visitors log List';
+    //     return view('visitors.visitorslog', [
+    //         'title' => $title,
+    //     ]);
+    // }
 
 
-    public function printVisitorLog()
-    {
-        return view('visitors.printVisitorLog');
-    }
+
+
+
+
+
 
 
     function updateOnlyLogIn($id){

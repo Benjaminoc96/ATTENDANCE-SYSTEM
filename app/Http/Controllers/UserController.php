@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Visitorslog;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -31,14 +32,32 @@ class UserController extends Controller
 
 
 
+    public function visitorslog()
+    {
+        $from = isset($_GET['from']) ? $_GET['from'] : date("Y-m-d",strtotime(date('Y-m-d')." -1 week"));
+        $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
+        $i = +1;
+        $title = 'Visitors Log List';
+        return view('visitors.visitorsnotloggedout', [
+            'title' => $title,
+            'from' => $from,
+            'to' => $to,
+            'i' => $i
+        ])->with('findVisitorsLogs', Visitorslog::all());
+
+    }
+
+
+
 
     public function index(Request $request)
     {
-
+        $title = 'Users List';
         $action = route('users.store');
         $user = new User;
         return view('users.index', [
             'user' => $user,
+            'title' => $title,
             'action' => $action
         ])->with('findUsers', User::withTrashed()->get());
     }

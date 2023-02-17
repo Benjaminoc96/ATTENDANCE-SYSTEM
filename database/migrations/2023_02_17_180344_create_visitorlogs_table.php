@@ -14,18 +14,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('visitors', function (Blueprint $table) {
+
+        Schema::create('visitors_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('contact');
-            $table->string('address');
-            $table->string('email')->nullable(true);
-            $table->string('log_type')->nullable(true);
-            $table->string('visitor_type');
+            $table->unsignedInteger('visitors_id');
+            $table->string('log_type');
             $table->string('status')->default('Active');
-            $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+
+            $table->foreign('visitors_id')->references('id')->on('visitors')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('visitors');
+        Schema::dropIfExists('visitors_logs');
     }
 };

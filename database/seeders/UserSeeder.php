@@ -21,14 +21,14 @@ class UserSeeder extends Seeder
         User::create([
             "name" => fake()->name(),
             "email" => 'director@test.com',
-            "role" => "director",
+            "role" => "Director",
             "password" => Hash::make('password')
         ]);
 
         User::create([
             "name" => fake()->name(),
             "email" => 'hr@test.com',
-            "role" => "hr",
+            "role" => "HR",
             "password" => Hash::make('password')
         ]);
 
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
         User::create([
             "name" => fake()->name(),
             "email" => 'receptionist@test.com',
-            "role" => "receptionist",
+            "role" => "Receptionist",
             "password" => Hash::make('password')
         ]);
 
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
         User::create([
             "name" => fake()->name(),
             "email" => 'admin@test.com',
-            "role" => "admin",
+            "role" => "Admin",
             "password" => Hash::make('password')
         ]);
     }

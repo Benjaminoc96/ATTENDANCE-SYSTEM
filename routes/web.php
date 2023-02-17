@@ -36,17 +36,18 @@ Route::prefix('visitors')->middleware('auth')->name('visitors.')->controller(Vis
     Route::delete('/{id}', 'destroy')->name('destroy');
     Route::patch('/updateOnlyLogIn/{id}', 'updateOnlyLogIn')->name('updateOnlyLogIn');
     Route::patch('/{id}', 'updateOnlyLogOut')->name('updateOnlyLogOut');
-    Route::post('/printVisitorLog', 'printVisitorLog')->name('printVisitorLog');
-    Route::get('/newPurpose/{id}', 'newPurpose')->name('newPurpose');
-    Route::post('/storenewPurpose/{id}', 'storenewPurpose')->name('storenewPurpose');
+    Route::get('/newpurpose/{id}', 'newpurpose')->name('newpurpose');
+    Route::post('/storenewpurpose', 'storenewpurpose')->name('storenewpurpose');
+    //Route::get('/loggedout', 'loggedout')->name('loggedout');
 });
 
 
-
+  
 
 
 Route::prefix('users')->middleware('auth')->name('users.')->controller(UserController::class)->group(function () {
     Route::get('/index', 'index')->name('index');
+    Route::get('/visitorslog', 'visitorslog')->name('visitorslog');
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
     Route::get('/edit/{id}', 'edit')->name('edit');
