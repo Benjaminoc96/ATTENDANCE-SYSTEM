@@ -55,7 +55,7 @@ class VisitorController extends Controller
 
 
 
-    
+
     public function visitorslog()
     {
         $from = isset($_GET['from']) ? $_GET['from'] : date("Y-m-d",strtotime(date('Y-m-d')." -1 week"));
@@ -106,7 +106,7 @@ class VisitorController extends Controller
        // dd($data);
 
        Purpose::create($data);
-        
+
         // $rules = $this->rules;
         // $validator = Validator::make($data, $rules, $this->messages);
 
@@ -116,7 +116,7 @@ class VisitorController extends Controller
         //     ->withInput();
         // }
 
-        
+
 
         $visitorRoute = route('visitors.index');
         return redirect($visitorRoute)->with('status', "New Purpose for Visiting has been added Successfully");

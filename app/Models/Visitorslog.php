@@ -9,8 +9,8 @@ class Visitorslog extends Model
 {
     use HasFactory;
 
-    
+
     public $table = 'v_visitors_logs';
 
-    
+
 }
