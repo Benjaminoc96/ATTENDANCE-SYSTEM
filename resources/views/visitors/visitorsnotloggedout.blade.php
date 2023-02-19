@@ -1,6 +1,6 @@
 @extends ('layouts.master')
 
-{{-- @section('title', $title) --}}
+@section('title', $title)
 
 @section ('content')
 
@@ -44,16 +44,15 @@
                   <h2 class="text-center">Visitors Not Logged Out Today({{ $to }})</h2>
                 <table id="myTable" class="table table-bordered table-stripped table-hover">
                             <colgroup>
-                                <col width="5%">
-                                <col width="10%">
-                                <col width="22%">
-                                <col width="22%">
-                                <col width="22%">
-                                <col width="10%">
+                              <col width="15%">
+                              <col width="25%">
+                              <col width="22%">
+                              <col width="25%">
+                              <col width="5%">
                             </colgroup>
                             <thead style="font-size: 16px;font-weight: bold;">
                                 <tr>
-                                    <th>#</th>
+
                                     <th>Date/Time</th>
                                     <th>Visitor Details</th>
                                     <th>Visit Details</th>
@@ -62,11 +61,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+
+                             
+
                               @forelse ($findVisitorsLogs as $findVisitorsLog)
 
-
                         <tr>
-                      <td class="">{{ $i }}</td>
+
                       <td class="text-right" style="font-size: 16px;">{{$findVisitorsLog->created_at}}</td>
                       <td>
                         <p class="m-0">
@@ -89,9 +90,13 @@
                       <td style="font-size: 16px;">{{$findVisitorsLog->purpose}}</td>
                       <td class="text-center">{{$findVisitorsLog->log_type}}</td>
                     </tr>
+              
+
                     @empty
                     <p>No visitor record found</p>
                     @endforelse
+
+                    
                           </tbody>
                       </table>
           </div>

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('contact');
             $table->string('address');
             $table->string('email')->nullable(true);
-            $table->string('log_type')->nullable(true);
+            $table->string('log_type');
             $table->string('visitor_type');
             $table->string('status')->default('Active');
             $table->softDeletes();

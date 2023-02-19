@@ -1,21 +1,11 @@
 @extends ('layouts.master')
 
-{{-- @section('title', $title) --}}
+@section('title', $title)
 
 @section ('content')
-{{-- <div class="container"> --}}
-    <h1 class="text-center">Visitors List</h1>
-    {{-- <div class="card-tools">
-      <form action="" method="POST">
-        <button type="submit" class="btn btn-flat btn-success" style="float: right" id="print"><span class="fas fa-print"></span>  Print</button>
-      </form>
-		</div> --}}
 
-    {{-- <div class="card-header py-3" style="float: right">
-          <a type="button" class="btn btn-success" href="{{ route('visitors.createpurpose') }}">
-              New Purpose
-          </a>
-    </div> --}}
+    <h1 class="text-center">Visitor List</h1>
+
 
 
 <div class="card-header py-3">
@@ -53,35 +43,38 @@
 
           <div class="modal-body">
 
+            <input type="hidden" name="log_type" value="OUT">
+
+            
             <div class="row">
               <div class="col">
 
 
-        <div class="mb-3 form-group">
-          <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter Name"
-          value="{{ old('name') ? old('name') : $visitor->name }}">    
-          @error('name')
-          <div class="invalid-feedback">
-            {{ $message }}
-          </div>
-          @enderror
-        </div>
-              </div>
+                  <div class="mb-3 form-group">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Enter Name"
+                    value="{{ old('name') ? old('name') : $visitor->name }}">    
+                    @error('name')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                        </div>
 
 
-              <div class="col">
-        <div class="mb-3 form-group">
-          <label for="contact" class="form-label">Contact</label>
-          <input type="tel" class="form-control @error('contact') is-invalid @enderror" name="contact" placeholder="Enter Phone Number" 
-          value="{{ old('contact') ? old('contact') : $visitor->contact }}">
-          @error('contact')
-          <div class="invalid-feedback">
-            {{ $message }}
-          </div>
-          @enderror
-        </div>
-              </div>
+                        <div class="col">
+                  <div class="mb-3 form-group">
+                    <label for="contact" class="form-label">Contact</label>
+                    <input type="tel" class="form-control @error('contact') is-invalid @enderror" name="contact" placeholder="Enter Phone Number" 
+                    value="{{ old('contact') ? old('contact') : $visitor->contact }}">
+                    @error('contact')
+                    <div class="invalid-feedback">
+                      {{ $message }}
+                    </div>
+                    @enderror
+                  </div>
+                        </div>
             </div>
 
 
@@ -134,7 +127,16 @@
           <label for="department" class="form-label">Department</label>
           <select class="form-control @error('department') is-invalid @enderror" name="department" id="department">
             <option>Select Department</option>
+            <option value="Accounts" {{ (old('department') == "Accounts")? "selected" : "" }}>Accounts</option>
+            <option value="Director General" {{ (old('department') == "Director General")? "selected" : "" }}>Director General</option>
+            <option value="Finance & Administration" {{ (old('department') == "Finance & Administration")? "selected" : "" }}>Finance & Administration</option>
+            <option value="Consultancy" {{ (old('department') == "Consultancy")? "selected" : "" }}>Consultancy</option>
+            <option value="Human Resource" {{ (old('department') == "Human Resource")? "selected" : "" }}>Human Resource</option>
+            <option value="Library" {{ (old('department') == "Library")? "selected" : "" }}>Library</option>
+            <option value="Coorperate & Affairs" {{ (old('department') == "Coorperate & Affairs")? "selected" : "" }}>Coorperate & Affairs</option>
             <option value="Faculty" {{ (old('department') == "Faculty")? "selected" : "" }}>Faculty</option>
+            <option value="Facilty" {{ (old('department') == "Facilty")? "selected" : "" }}>Facilty</option>
+            <option value="Academics" {{ (old('department') == "Academics")? "selected" : "" }}>Academics</option>
             <option value="Research and Innovation" {{ (old('department') == "Research and Innovation")? "selected" : "" }}>Research and Innovation</option>
           </select>
           @error('department')
@@ -143,6 +145,8 @@
           </div>
           @enderror
         </div>
+
+
           </div>
 
 
@@ -181,9 +185,8 @@
             </div>
         </div>
 
-        <input type="hidden" name="log_type" value="OUT">
 
-        <input type="hidden" name="visitor_type" value="visitor">
+        {{-- <input type="hidden" name="visitor_type" value="visitor"> --}}
 
         <button type="submit" class="btn btn-success">Submit</button>
         <a href="{{ route('visitors.index') }}" class="btn btn-danger" data-dismiss="modal">Back</a>
@@ -351,23 +354,35 @@
                   <div class="modal-body">
 
                     <input type="hidden" value="{{ $visitor->id }}" name="visitors_id" id="">
+                    <input type="hidden" value="{{ $visitor->name }}" name="name" id="">
+                    <input type="hidden" value="{{ $visitor->contact }}" name="contact" id="">
+                    <input type="hidden" value="{{ $visitor->address }}" name="address" id="">
 
 
                     <div class="row">
                       <div class="col">
-                        <div class="mb-3 form-group">
-                          <label for="department" class="form-label">Department</label>
-                          <select class="form-control @error('department') is-invalid @enderror" name="department" id="department">
-                            <option>Select Department</option>
-                            <option value="Faculty" {{ (old('department') == "Faculty")? "selected" : "" }}>Faculty</option>
-                            <option value="Research and Innovation" {{ (old('department') == "Research and Innovation")? "selected" : "" }}>Research and Innovation</option>
-                          </select>
-                          @error('department')
-                          <div class="invalid-feedback">
-                            {{ $message }}
-                          </div>
-                          @enderror
-                        </div>
+        <div class="mb-3 form-group">
+          <label for="department" class="form-label">Department</label>
+          <select class="form-control @error('department') is-invalid @enderror" name="department" id="department">
+            <option>Select Department</option>
+            <option value="Accounts" {{ (old('department') == "Accounts")? "selected" : "" }}>Accounts</option>
+            <option value="Director General" {{ (old('department') == "Director General")? "selected" : "" }}>Director General</option>
+            <option value="Finance & Administration" {{ (old('department') == "Finance & Administration")? "selected" : "" }}>Finance & Administration</option>
+            <option value="Consultancy" {{ (old('department') == "Consultancy")? "selected" : "" }}>Consultancy</option>
+            <option value="Human Resource" {{ (old('department') == "Human Resource")? "selected" : "" }}>Human Resource</option>
+            <option value="Library" {{ (old('department') == "Library")? "selected" : "" }}>Library</option>
+            <option value="Coorperate & Affairs" {{ (old('department') == "Coorperate & Affairs")? "selected" : "" }}>Coorperate & Affairs</option>
+            <option value="Faculty" {{ (old('department') == "Faculty")? "selected" : "" }}>Faculty</option>
+            <option value="Facilty" {{ (old('department') == "Facilty")? "selected" : "" }}>Facilty</option>
+            <option value="Academics" {{ (old('department') == "Academics")? "selected" : "" }}>Academics</option>
+            <option value="Research and Innovation" {{ (old('department') == "Research and Innovation")? "selected" : "" }}>Research and Innovation</option>
+          </select>
+          @error('department')
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
+          @enderror
+        </div>
                       </div>
 
 
@@ -550,12 +565,8 @@
   });
 </script>
 
-
-
-
-  <script>
-
-        const visitModalwindowLocation = window.location.href;
+<script>
+const visitModalwindowLocation = window.location.href;
         const visitModalopenForm = visitModalwindowLocation.includes('newpurpose');
         if(visitModalopenForm){
         const visitModalmodalElement = document.getElementById('visitModal'); 
@@ -586,6 +597,6 @@
             addVisitorModal.show();
 
           }
-  </script
+</script>
 
 @endpush

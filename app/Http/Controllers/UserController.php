@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Visitorslog;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -28,24 +30,6 @@ class UserController extends Controller
     private $messages = [
         'name.regex' => 'The name field can only contain alphabet and spaces'
     ];
-
-
-
-
-    public function visitorslog()
-    {
-        $from = isset($_GET['from']) ? $_GET['from'] : date("Y-m-d",strtotime(date('Y-m-d')." -1 week"));
-        $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
-        $i = +1;
-        $title = 'Visitors Log List';
-        return view('visitors.visitorsnotloggedout', [
-            'title' => $title,
-            'from' => $from,
-            'to' => $to,
-            'i' => $i
-        ])->with('findVisitorsLogs', Visitorslog::all());
-
-    }
 
 
 
@@ -102,7 +86,12 @@ class UserController extends Controller
         ->withInput();
     }
 
-    $user = User::create($data);
+    $user = User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'role' => $data['role'],
+        'password' => Hash::make($data['password']),
+    ]);
 
         $userListRoute = route('users.index');
         return redirect($userListRoute)
@@ -211,4 +200,7 @@ class UserController extends Controller
         $userRoute = route('users.index');
         return redirect($userRoute)->with('status', "User restore Successfully");
     }
+
+
+
 }

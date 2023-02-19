@@ -15,13 +15,19 @@ return new class extends Migration
     public function up()
     {
 
-        Schema::create('visitors_logs', function (Blueprint $table) {
+        Schema::create('v_visitors_logs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('visitors_id');
-            $table->string('log_type');
+            $table->string('name');
+            $table->string('contact');
+            $table->string('address');
+            $table->string('department');
+            $table->string('staff');
+            $table->string('purpose');
             $table->string('status')->default('Active');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->string('timeout')->nullable(true);
 
             $table->foreign('visitors_id')->references('id')->on('visitors')->onDelete('restrict')->onUpdate('cascade');
         });
