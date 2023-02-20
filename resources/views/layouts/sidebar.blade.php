@@ -10,7 +10,7 @@
   <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main sideNav">
     <ul class="navbar-nav" id="sideBarLink">
       <li class="nav-item">
-        <a class="nav-link text-white active" href="/dashboard">
+      <a class="nav-link text-white" href="/dashboard">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">dashboard</i>
           </div>
@@ -27,7 +27,7 @@
       </li>
       @if(Auth::user()->isAdmin() or Auth::user()->isHR() or Auth::user()->isDirector())
       <li class="nav-item">
-        <a class="nav-link text-white " href="{{ route('visitors.visitorslog') }}">
+        <a class="nav-link text-white " href="{{ route('visitorlog.index') }}">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">people</i>
           </div>

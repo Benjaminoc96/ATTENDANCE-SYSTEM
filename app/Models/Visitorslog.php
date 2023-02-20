@@ -13,4 +13,6 @@ class Visitorslog extends Model
     public $table = 'v_visitors_logs';
 
 
+    protected $guarded = [];
+
 }

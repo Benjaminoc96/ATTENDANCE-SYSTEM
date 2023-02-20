@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visitorslog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VisitorsLogController extends Controller
 {
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -13,8 +19,73 @@ class VisitorsLogController extends Controller
      */
     public function index()
     {
-        //return view('visitorsLog.index');
+        $from = isset($_GET['from']) ? $_GET['from'] : date("Y-m-d",strtotime(date('Y-m-d')." -1 week"));
+        $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
+        $title = 'Visitors Log List';
+        return view('visitors.visitorslog', [
+            'title' => $title,
+            'from' => $from,
+            'to' => $to,
+        ])->with('findVisitorsLogs', Visitorslog::all());
     }
+
+
+
+
+
+
+    public function visitortoday()
+    {
+
+        $from = isset($_GET['from']) ? $_GET['from'] : date("Y-m-d",strtotime(date('Y-m-d')." -1 week"));
+        $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
+
+        $castToDate = date("Y-m-d", strtotime(date('Y-m-d')));
+        $created_at_query = date($castToDate);
+
+        $visitor_today = DB::select("SELECT DISTINCT * FROM v_visitors_logs where DATE(v_visitors_logs.created_at) = '{$created_at_query}' ");
+
+        $title = 'Visits Today';
+        return view('visitors.visittoday', [
+            'title' => $title,
+            'from' => $from,
+            'to' => $to
+        ])->with('findVisitorsLogs', $visitor_today);
+
+    }
+
+
+
+
+
+
+
+
+
+    public function visitorsnotloggedout()
+    {
+        $title = "Visitors Not Logged Out Today";
+
+        $from = isset($_GET['from']) ? $_GET['from'] : date("Y-m-d",strtotime(date('Y-m-d')." -1 week"));
+        $to = isset($_GET['to']) ? $_GET['to'] : date("Y-m-d");
+
+        $castToDate = date("Y-m-d", strtotime(date('Y-m-d')));
+        $created_at_query = date($castToDate);
+
+        $created_at = DB::select("SELECT DISTINCT * FROM v_visitors_logs inner join logs on logs.visitors_id  = v_visitors_logs.visitors_id where logs.visitors_id  = v_visitors_logs.visitors_id and v_visitors_logs.timeout IS NULL and logs.log_type NOT IN ('OUT') and DATE(v_visitors_logs.created_at) = '{$created_at_query}' ");
+
+        return view('visitors.visitorsnotloggedout', [
+            'title' => $title,
+            'from' => $from,
+            'to' => $to
+        ])->with('findVisitorsLogs', $created_at);
+
+    }
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.

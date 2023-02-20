@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('contact');
             $table->string('address');
             $table->string('email')->nullable(true);
-            $table->string('log_type')->nullable(true);
-            $table->string('visitor_type');
+            $table->string('log_type');
+            $table->string('gender')->nullable(true);
             $table->string('status')->default('Active');
             $table->softDeletes();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

@@ -15,7 +15,7 @@
 </div>
 @endif
 
-      <h1> @yield('title') </h1>
+      {{-- <h1> @yield('title') </h1> --}}
   
 
   
