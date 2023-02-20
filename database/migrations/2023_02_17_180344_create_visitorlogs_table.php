@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('contact');
             $table->string('address');
-            $table->string('department');
-            $table->string('staff');
+            $table->string('department')->nullable(true);
+            $table->string('staff')->nullable(true);
             $table->string('purpose');
             $table->string('status')->default('Active');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

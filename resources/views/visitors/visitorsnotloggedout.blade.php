@@ -47,17 +47,17 @@
                               <col width="15%">
                               <col width="25%">
                               <col width="22%">
-                              <col width="25%">
+                              {{-- <col width="25%"> --}}
                               <col width="5%">
                             </colgroup>
                             <thead style="font-size: 16px;font-weight: bold;">
                                 <tr>
 
-                                    <th>Date/Time</th>
-                                    <th>Visitor Details</th>
+                                    <th>Time In</th>
+                                    <th>Visitor Info</th>
                                     <th>Visit Details</th>
-                                    <th>Purpose</th>
-                                    <th>Log Type</th>
+                                    {{-- <th>Purpose</th> --}}
+                                    <th>Time Out</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,7 +73,8 @@
                         <p class="m-0">
                           <small>
                             <span class="text-muted" style="font-size: 16px;font-weight: bold;">Name: </span><span style="font-size: 16px;">{{$findVisitorsLog->name}}</span><br>
-                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Contact: </span><span style="font-size: 16px;">{{$findVisitorsLog->contact}}</span>
+                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Contact: </span><span style="font-size: 16px;">{{$findVisitorsLog->contact}}</span><br>
+                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Address: </span><span style="font-size: 16px;">{{$findVisitorsLog->address}}</span>
                           </small>
                         </p>
                       </td>
@@ -81,14 +82,20 @@
                       <td>
                         <p class="m-0">
                           <small>
+                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Staff: </span><span style="font-size: 16px;">{{$findVisitorsLog->staff}}</span><br>
                             <span class="text-muted" style="font-size: 16px;font-weight: bold;">Department: </span><span style="font-size: 16px;">{{$findVisitorsLog->department}}</span><br>
-                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Staff: </span><span style="font-size: 16px;">{{$findVisitorsLog->staff}}</span>
+                            <span class="text-muted" style="font-size: 16px;font-weight: bold;">Purpose: </span><span style="font-size: 16px;">{{$findVisitorsLog->purpose}}</span>
+                            
                           </small>
                         </p>
                       </td>
                       
-                      <td style="font-size: 16px;">{{$findVisitorsLog->purpose}}</td>
-                      <td class="text-center">{{$findVisitorsLog->log_type}}</td>
+                      {{-- <td style="font-size: 16px;">{{$findVisitorsLog->purpose}}</td> --}}
+                      @if ($findVisitorsLog->timeout == '')
+                      <td class="text-center" style="color: red; font-weight: bolder;">Not Logged Out</td>
+                      @else
+                      <td class="text-center">{{$findVisitorsLog->timeout}}</td>
+                      @endif
                     </tr>
               
 

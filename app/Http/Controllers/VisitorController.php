@@ -24,12 +24,13 @@ class VisitorController extends Controller
         'name' => 'required|max:150|regex:/^[a-zA-Z ]*$/',
         'address' => 'required|max:150',
         'department'=>'required|max:125',
-        'staff'=>'required|max:150|regex:/^[a-zA-Z ]*$/',
+        'staff'=>'max:150|regex:/^[a-zA-Z ]*$/',
         'purpose'=>'required|max:125',
+        'gender'=>'required',
         'contact' => ['required', 'numeric', 'digits:10']
     ];
 
-
+ 
 
     private $messages = [
         'name.regex' => 'The name field can only contain alphabet and spaces',
@@ -39,7 +40,7 @@ class VisitorController extends Controller
 
 
 
-    public function index()
+     public function index()
     {
         $title = 'Visitors List';
         $action = route('visitors.store');
@@ -102,7 +103,7 @@ class VisitorController extends Controller
         'name' => $data['name'],
         'contact' => $data['contact'],
         'address' => $data['address'],
-        'visitor_type' => $data['visitor_type'],
+        'gender' => $data['gender'],
         'log_type' => 'OUT'
     ]);
 
@@ -173,26 +174,26 @@ class VisitorController extends Controller
         $data = $request->all();
 
 
-        $rules = $this->rules;
-        //$rules['visitor_id'][] = Rule::unique('visitors')->ignore($visitor);
-        $rules['contact'][] = Rule::unique('visitors')->ignore($visitor);
-        $validator = Validator::make($data, $rules, $this->messages);
+        // $rules = $this->rules;
+        // $rules['contact'][] = Rule::unique('visitors')->ignore($visitor);
+        // $validator = Validator::make($data, $rules, $this->messages);
 
-        if ($validator->fails()) {
-            return redirect(route('visitors.edit', ['id' => $id]))
-            ->withErrors($validator)
-            ->withInput();
-        }
+        // if ($validator->fails()) {
+        //     return redirect(route('visitors.edit', ['id' => $id]))
+        //     ->withErrors($validator)
+        //     ->withInput();
+        // }
 
 
         $visitor->name = $data['name'];
         $visitor->contact = $data['contact'];
         $visitor->address = $data['address'];
-        $visitor->department = $data['department'];
-        $visitor->staff = $data['staff'];
-        $visitor->purpose = $data['purpose'];
-        $visitor->visitor_type = $data['visitor_type'];
-        $visitor->log_type = $data['log_type'];
+        $visitor->gender = $data['gender'];
+        //$visitor->department = $data['department'];
+        //$visitor->staff = $data['staff'];
+        //$visitor->purpose = $data['purpose'];
+        //$visitor->visitor_type = $data['visitor_type'];
+        //$visitor->log_type = $data['log_type'];
 
         $visitor->save();
 

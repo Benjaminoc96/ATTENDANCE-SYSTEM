@@ -43,7 +43,7 @@ class VisitorsLogController extends Controller
         $castToDate = date("Y-m-d", strtotime(date('Y-m-d')));
         $created_at_query = date($castToDate);
 
-        $visitor_today = DB::select("SELECT DISTINCT v_visitors_logs.created_at, v_visitors_logs.updated_at,  v_visitors_logs.name, v_visitors_logs.contact, v_visitors_logs.department, v_visitors_logs.staff, v_visitors_logs.purpose FROM v_visitors_logs where DATE(v_visitors_logs.created_at) = '{$created_at_query}' ");
+        $visitor_today = DB::select("SELECT DISTINCT * FROM v_visitors_logs where DATE(v_visitors_logs.created_at) = '{$created_at_query}' ");
 
         $title = 'Visits Today';
         return view('visitors.visittoday', [
@@ -72,7 +72,7 @@ class VisitorsLogController extends Controller
         $castToDate = date("Y-m-d", strtotime(date('Y-m-d')));
         $created_at_query = date($castToDate);
 
-        $created_at = DB::select("SELECT DISTINCT v_visitors_logs.created_at, v_visitors_logs.name, v_visitors_logs.contact, v_visitors_logs.department, v_visitors_logs.staff, v_visitors_logs.purpose, logs.log_type FROM v_visitors_logs inner join logs on logs.visitors_id  = v_visitors_logs.visitors_id where logs.visitors_id  = v_visitors_logs.visitors_id and v_visitors_logs.timeout IS NULL and logs.log_type NOT IN ('OUT') and DATE(v_visitors_logs.created_at) = '{$created_at_query}' ");
+        $created_at = DB::select("SELECT DISTINCT * FROM v_visitors_logs inner join logs on logs.visitors_id  = v_visitors_logs.visitors_id where logs.visitors_id  = v_visitors_logs.visitors_id and v_visitors_logs.timeout IS NULL and logs.log_type NOT IN ('OUT') and DATE(v_visitors_logs.created_at) = '{$created_at_query}' ");
 
         return view('visitors.visitorsnotloggedout', [
             'title' => $title,
