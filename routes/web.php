@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-// Route::get('/', function () {
-//     return view('auth.login');
-// });
+Route::get('/', function () {
+    return view('auth.login');
+});
 
 //Route::resource('visitors', VisitorController::class);
 
@@ -42,7 +42,7 @@ Route::prefix('visitors')->middleware('auth')->name('visitors.')->controller(Vis
 });
 
 
-  
+
 Route::prefix('visitorlog')->middleware('auth')->name('visitorlog.')->controller(VisitorsLogController::class)->group(function () {
     Route::get('/index', 'index')->name('index');
     Route::get('/visitorsnotloggedout', 'visitorsnotloggedout')->name('visitorsnotloggedout');
