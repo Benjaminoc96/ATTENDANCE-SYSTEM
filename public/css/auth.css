@@ -42,8 +42,6 @@ input::placeholder {
 }
 
 .login {
-    /* width: 55%; */
-    padding: 5px 5.5rem;
     margin: 1rem 0;
     background-color: rgb(8, 8, 153);
 }
@@ -110,6 +108,41 @@ input::placeholder {
 }
 
 /* responsive page */
+@media only screen and (max-width: 1200px) {
+    body {
+            background-size: auto 140vh;
+        }
+    form {
+            max-width: 80%;
+            margin: auto;
+            padding:  5rem;
+        }
+}
+
 @media only screen and (max-width: 600px) {
-    
+  .section2 {
+        Max-width: 100%;
+        margin: none;
+        padding: 2rem 0;
+  }
+  .container {
+    padding: 0;
+  }
+    form {
+            max-width: 100%;
+            padding: 1rem;
+            margin: none;
+            border-radius: 0;
+        }
+    .email input,
+    .password input {
+            border-radius: 2px;
+            padding: 10px 2rem;
+            width: 100%;
+     }
+     .login {
+        width: 80%;
+        border-radius: 2px;
+        padding: 10px 2rem;
+     }
 }

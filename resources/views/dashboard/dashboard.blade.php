@@ -21,8 +21,8 @@
         </div>
         <hr class="dark horizontal my-0">
         <div class="card-footer p-3">
-          <p class="mb-0"> <a href="{{ route('visitorlog.visitortoday') }}">Total Visits Today --> </a> 
-            <i style="text-decoration: none;color:blue;font-weight:bolder;font-size: 20px;">
+          <p class="mb-0"> <a href="{{ route('visitorlog.visitortoday') }}">Total Visits Today: </a> 
+            <i style="text-decoration: none;color:blue;font-weight:bold;font-size: 20px;">
               {{ $count_total_visit_today }}
             </span></i>
         </div>
@@ -67,7 +67,7 @@
         </div>
         <hr class="dark horizontal my-0">
         <div class="card-footer p-3">
-          <p class="mb-0"> <a href="{{ route('visitorlog.visitorsnotloggedout') }}"> Visitors Not Logged Out Today --></a><span class="text-success text-sm font-weight-bolder">
+          <p class="mb-0"> <a href="{{ route('visitorlog.visitorsnotloggedout') }}"> Visitors Not Logged Out Today: </a><span class="text-success text-sm font-weight-bolder">
             
             <?php
 
