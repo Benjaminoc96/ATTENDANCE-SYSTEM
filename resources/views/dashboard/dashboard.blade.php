@@ -24,7 +24,7 @@
           <p class="mb-0"> <a href="{{ route('visitorlog.visitortoday') }}">Total Visits Today: </a> 
             <i style="text-decoration: none;color:blue;font-weight:bold;font-size: 20px;">
               {{ $count_total_visit_today }}
-            </span></i>
+            </i>
         </div>
       </div>
     </div>
@@ -71,11 +71,11 @@
             
             <?php
 
-            echo '<a style="text-decoration: none;color:red;font-weight:bolder;font-size: 20px;" href="#"> '.$count_total_login_today - $count_total_logout_today.' </a>';
+            echo '<a style="text-decoration: none;color:red;font-weight:bolder;font-size: 20px;" href="#"> '.$count_total_login_today - $count_total_logout_today.' </a>'
 
             ?>
-          
-          
+
+
           </span></p>
         </div>
       </div>

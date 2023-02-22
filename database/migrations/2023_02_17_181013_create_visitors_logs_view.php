@@ -33,13 +33,13 @@ return new class extends Migration
 
         DB::unprepared("CREATE TRIGGER `update_visitors_logtype_update_visitorslog_timeout` AFTER UPDATE ON `visitors`
         FOR EACH ROW BEGIN
-       
+
            IF (NEW.log_type = 'IN')
            THEN
-           
+
        UPDATE v_visitors_logs SET v_visitors_logs.timeout = NEW.updated_at
        WHERE v_visitors_logs.visitors_id = NEW.id order by v_visitors_logs.id desc LIMIT 1;
-       
+
        END IF;
        END
         ");
@@ -54,10 +54,10 @@ return new class extends Migration
 
         IF (NEW.status = 'Active')
         THEN
-    
+
     INSERT into logs(logs.visitors_id, logs.log_type) VALUES(NEW.id, 'IN');
         END IF;
-    
+
     END
         ");
 
